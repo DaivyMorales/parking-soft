@@ -1,18 +1,50 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { dbConnect } from "../../../utils/database";
+import Entry from "../../../models/entry.model";
 
 dbConnect();
 
-export default function indexEntry(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
+export default async function indexEntry(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { method, body } = req;
 
   switch (method) {
     case "GET":
-      res.json("Getting entry information");
+      try {
+        const entry = await Entry.find();
+        return res.status(200).json(entry);
+      } catch (error) {
+        if (error instanceof Error) {
+          res.status(500).json({ error: error.message });
+        } else {
+          res.status(500).json({ error: "Ha ocurrido un error." });
+        }
+      }
       break;
 
     case "POST":
-      res.json("Creating new information");
+      try {
+        const { valero_num, plate, automobile_type, amount } = body;
+
+        const newEntry = new Entry({
+          valero_num,
+          plate,
+          automobile_type,
+          amount,
+        });
+
+        const entrySaved = await newEntry.save();
+
+        return res.status(200).json(entrySaved);
+      } catch (error) {
+        if (error instanceof Error) {
+          res.status(500).json({ error: error.message });
+        } else {
+          res.status(500).json({ error: "Ha ocurrido un error." });
+        }
+      }
       break;
 
     default:
