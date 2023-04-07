@@ -21,6 +21,9 @@ const entrySchema = new Schema(
       type: Number,
       trim: true,
     },
+    exit: {
+      type: Boolean,
+    },
   },
   {
     timestamps: {

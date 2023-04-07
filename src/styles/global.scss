@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: #202226;
+    color: white
+}
+
+h1 {
+    @apply text-7xl;
+}
+
+h2 {
+    @apply text-2xl font-bold;
+}
+
+td {
+    border-width: 1px;
+    @apply text-xs px-3 border-gray-700 p-1 text-gray-200;
+}
+
+th {
+    @apply text-sm px-3 text-gray-500;
+}
+
+p {
+    @apply text-xs text-gray-400;
+}
+
+.tagBox {
+    font-size: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.cardForm {
+    border-width: 2px;
+    border-color: #292A2E;
+}
+
+.trBorder {
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.iconTable {
+    @apply text-gray-300
+}
+
+thead {
+    @apply font-normal;
+}
+
+h3 {
+    @apply font-semibold text-sm;
+}
+
+label {
+    @apply text-sm font-medium;
+}
+
+input {
+    border-width: 1px;
+    @apply text-xs rounded-lg w-full bg-[#242529] p-2 border-[#474950] text-white font-light;
+}
+
+button {
+    @apply text-xs font-medium p-2 bg-blue-500 rounded-lg bg-[#242529] border-[#36373d] border-2;
+}
+
+.labelRadio{
+    @apply text-xs
+}
