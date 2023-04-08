@@ -28,6 +28,7 @@ export default function EntryCard({ entry }: EntryCardProps) {
   const { calculateAutomobileAmount } = useContext(ratesContext);
 
   const [amountState, setAmountState] = useState<number>(1);
+  const [timeDiff, setTimeDiff] = useState<number>(0);
 
   const dateCreated = new Date(entry.createdAt);
   const formattedTimeCreated = dateCreated.toISOString().substring(11, 16);
@@ -41,16 +42,15 @@ export default function EntryCard({ entry }: EntryCardProps) {
 
   const updatedTime: string = `${formattedTimeUpdated} - ${formattedDateUpdated}`;
 
-  // useEffect(() => {
-  //   amount;
-  // }, []);
-
-  const amountCalculate = async () => {
+  useEffect(() => {
     const diffInMs =
       new Date(entry.updatedAt).getTime() - new Date(entry.createdAt).getTime();
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    setTimeDiff(Math.floor(diffInMs / (1000 * 60 * 60)));
+  }, [amountState]);
+
+  const amountCalculate = async () => {
     const amountCalculated = calculateAutomobileAmount(
-      diffInHours,
+      timeDiff,
       entry.automobile_type
     );
     const amountStatus: Exit = {
@@ -58,7 +58,7 @@ export default function EntryCard({ entry }: EntryCardProps) {
       amount: amountCalculated,
     };
     console.log(amountCalculated);
-    await updateStatusEntryAndAmount(entry._id, amountStatus);
+    updateStatusEntryAndAmount(entry._id, amountStatus);
   };
 
   return (
@@ -91,13 +91,14 @@ export default function EntryCard({ entry }: EntryCardProps) {
         <a
           href="#"
           onClick={() => {
+            setAmountState(1);
             amountCalculate();
           }}
           className="font-medium text-red-600  hover:underline"
         >
           Pagar
         </a>
-        </th>
+      </th>
     </tr>
   );
 }
