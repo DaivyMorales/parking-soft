@@ -23,6 +23,8 @@ interface StateContext {
   updateEntry: (id: string, body: Request) => Promise<void>;
   updateStatusEntryAndAmount: (id: string, exit: object) => Promise<void>;
   createEntry: (body: object) => Promise<void>;
+  filterAutomobile: (type: string) => Promise<void>;
+  getEntrys: () => Promise<void>;
 }
 
 export const entryContext = createContext<StateContext>({
@@ -31,6 +33,8 @@ export const entryContext = createContext<StateContext>({
   updateEntry: async () => {},
   updateStatusEntryAndAmount: async () => {},
   createEntry: async () => {},
+  filterAutomobile: async () => {},
+  getEntrys: async () => {},
 });
 
 export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
@@ -80,6 +84,14 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
     }
   };
 
+  const filterAutomobile = async (type: string) => {
+    const response = await axios.get(
+      `http://localhost:3000/api/entry/type/${type}`
+    );
+    setEntrys(response.data);
+    console.log(response.data);
+  };
+
   const createEntry = async (body: object) => {
     try {
       const response = await axios.post(
@@ -87,6 +99,15 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
         body
       );
       setEntrys([...entrys, response.data]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getEntrys = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/entry");
+      setEntrys(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +121,8 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
         updateEntry,
         updateStatusEntryAndAmount,
         createEntry,
+        filterAutomobile,
+        getEntrys,
       }}
     >
       {children}

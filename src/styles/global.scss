@@ -102,11 +102,32 @@ button {
 
 .boxFilter {
     border-width: 1px;
-    @apply flex w-28 justify-center shadow-lg items-center gap-x-2 text-xs rounded-md bg-[#292a2e] px-2 py-1 border-[#474950] text-white font-light 
+    @apply flex w-28 justify-center shadow-lg items-center gap-x-2 text-xs rounded-md bg-[#292a2e] px-2 py-1 border-[#474950] text-white font-light
 }
 
 .filterInput {
-    @apply bg-[#292a2e] w-16  text-white text-xs;
+    @apply bg-[#292a2e] w-16 text-white text-xs;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    // Estilos específicos para webkit
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    // Estilos específicos para Firefox
+    &::-moz-number-spin-box {
+        -moz-appearance: textfield;
+    }
+}
+
+.filterSelect {
+    @apply bg-[#292a2e] w-full text-white text-xs rounded-none;
 
     &:focus {
         outline: none;

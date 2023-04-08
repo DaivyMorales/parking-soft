@@ -17,6 +17,8 @@ import EntryForm from "@/components/EntryForm";
 
 import { BsSearch } from "react-icons/bs";
 import { TiPlus } from "react-icons/ti";
+import { TbSteeringWheel } from "react-icons/tb";
+import { HiFilter } from "react-icons/hi";
 
 interface MyProps {
   data: {
@@ -45,25 +47,42 @@ interface Entry {
 export default function index({ data }: MyProps) {
   const { push } = useRouter();
 
-  const { entrys, setEntrys } = useContext(entryContext);
+  const { entrys, setEntrys, filterAutomobile, getEntrys } =
+    useContext(entryContext);
   const { showAlert } = useContext(alertContext);
 
   const [showForm, setShowForm] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  useEffect(() => {
-    if (Array.isArray(data)) {
-      setEntrys(data);
-    } else {
-      setEntrys(Array.from([data]));
-    }
-  }, []);
-
   const handleOp = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  console.log(entrys);
+  const [selectedType, setSelectedType] = useState<string>("");
+
+  function handleTypeChange(event: ChangeEvent<HTMLSelectElement>) {
+    setSelectedType(event.target.value);
+  }
+
+  useEffect(() => {
+    if (selectedType !== "" && selectedType !== "Tipo") {
+      filterAutomobile(selectedType);
+    } else if (selectedType === "Tipo" || selectedType === "") {
+      if (Array.isArray(data)) {
+        setEntrys(data);
+      } else {
+        setEntrys(Array.from([data]));
+      }
+    }
+  }, [selectedType]);
+
+  // useEffect(() => {
+  //   if (selectedType !== "" && selectedType !== "Todos") {
+  //     filterAutomobile(selectedType);
+  //   } else if (selectedType === "Todos") {
+  //     getEntrys();
+  //   }
+  // }, []);
 
   return (
     <div className="w-screen h-screen flex justify-start items-center flex-col relative z-10">
@@ -71,18 +90,40 @@ export default function index({ data }: MyProps) {
         style={showAlert || showForm ? { opacity: "0.2" } : {}}
         className="my-8 relative overflow-x-auto flex flex-col gap-y-3 "
       >
-        <div className="flex py-1 gap-x-1 ">
-          <button className="bg-blue-600 border-blue-800" onClick={() => setShowForm(!showForm)}>
-            <TiPlus/> Insertar vehiculo
-          </button>
-          <div className="boxFilter">
-            <BsSearch size={12} className="" />
-            <input
-              type="text "
-              className="filterInput placeholder: text-gray-300"
-              placeholder="Buscar..."
-              onChange={handleOp}
-            />
+        <div className="grid grid-cols-2 py-1  gap-x-1 px-1">
+          <div className="flex gap-x-2">
+            <button
+              className="bg-blue-600 border-blue-800"
+              onClick={() => setShowForm(!showForm)}
+            >
+              <TiPlus /> Insertar vehiculo
+            </button>
+            <div className="boxFilter">
+              <BsSearch size={12} className="" />
+              <input
+                type="text "
+                className="filterInput placeholder: text-gray-300"
+                placeholder="Buscar..."
+                onChange={handleOp}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <div className="boxFilter ">
+              <HiFilter />
+
+              <select
+                id="automobile_type"
+                className="filterSelect"
+                onChange={handleTypeChange}
+              >
+                <option>Tipo</option>
+                <option value="Carro">Carro</option>
+                <option value="Moto">Moto</option>
+                <option value="Camion">Camion</option>
+                <option value="Mula">Mula</option>
+              </select>
+            </div>
           </div>
         </div>
         <table className="w-full text-sm text-left text-gray-500 ">
@@ -137,7 +178,10 @@ export default function index({ data }: MyProps) {
               .filter((entry) => {
                 if (searchTerm == "") {
                   return entry;
-                } else if (entry.plate.includes(searchTerm) || entry.valero_num.includes(searchTerm)) {
+                } else if (
+                  entry.plate.includes(searchTerm) ||
+                  entry.valero_num.includes(searchTerm)
+                ) {
                   return entry;
                 }
               })
