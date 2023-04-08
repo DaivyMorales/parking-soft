@@ -1,7 +1,7 @@
 import EntryCard from "@/components/EntryCard";
 import { entryContext } from "@/contexts/EntryContext";
 import { GetServerSidePropsContext } from "next";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import {
   MdFindInPage,
   MdGrid3X3,
@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/router";
 import Alert from "../../components/alert/Alert";
 import { alertContext } from "@/contexts/AlertContext";
+import EntryForm from "@/components/EntryForm";
 
 interface MyProps {
   data: {
@@ -44,6 +45,8 @@ export default function index({ data }: MyProps) {
   const { entrys, setEntrys } = useContext(entryContext);
   const { showAlert } = useContext(alertContext);
 
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   useEffect(() => {
     if (Array.isArray(data)) {
       setEntrys(data);
@@ -57,11 +60,11 @@ export default function index({ data }: MyProps) {
   return (
     <div className="w-screen h-screen flex justify-start items-center flex-col relative z-10">
       <div
-        style={showAlert ? { opacity: "0.2" } : {}}
+        style={showAlert || showForm ? { opacity: "0.2" } : {}}
         className="my-8 relative overflow-x-auto flex flex-col gap-y-3 "
       >
         <div>
-          <button onClick={() => push("/entry/EntryForm")}>
+          <button onClick={() => setShowForm(!showForm)}>
             Insertar vehiculo
           </button>
         </div>
@@ -120,6 +123,11 @@ export default function index({ data }: MyProps) {
         </table>
       </div>
       {showAlert ? <Alert /> : ""}
+      {showForm ? (
+        <EntryForm setShowForm={setShowForm} showForm={showForm} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

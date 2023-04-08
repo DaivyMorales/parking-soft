@@ -28,15 +28,10 @@ export default function EntryCard({ entry }: EntryCardProps) {
   const { calculateAutomobileAmount } = useContext(ratesContext);
   const { showAlert, setShowAlert, setAlertInformation, alertInformation } =
     useContext(alertContext);
-
-  const [amountState, setAmountState] = useState<number>(1);
-  const [timeDiff, setTimeDiff] = useState<number>(0);
-
+    
   const now = new Date();
   now.setHours(now.getHours() - 5);
   const isoDateTime = now.toISOString();
-
-  console.log("isoDateTime", isoDateTime);
 
   const dateCreated = new Date(entry.createdAt);
   const formattedTimeCreated = dateCreated.toISOString().substring(11, 16);
@@ -68,7 +63,6 @@ export default function EntryCard({ entry }: EntryCardProps) {
       exit: true,
       amount: amountCalculated,
     };
-    console.log(amountCalculated);
 
     setAlertInformation({
       _id: entry._id,
@@ -78,8 +72,6 @@ export default function EntryCard({ entry }: EntryCardProps) {
       amount: amountCalculated,
       exit: true,
     });
-
-    
   };
 
   return (

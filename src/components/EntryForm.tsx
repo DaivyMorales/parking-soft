@@ -13,6 +13,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { FaTruck, FaMotorcycle, FaTrailer } from "react-icons/fa";
 import { BsCarFrontFill } from "react-icons/bs";
 import { HiCheckCircle } from "react-icons/hi";
+import { motion } from "framer-motion";
 
 interface IInitialValues {
   valero_num: string;
@@ -21,13 +22,18 @@ interface IInitialValues {
   exit: boolean;
 }
 
+interface EntryFormProps {
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  showForm: boolean;
+}
+
 interface StyleBoxType {
   color: string;
   borderColor: string;
   borderWidth: string;
 }
 
-export default function EntryForm() {
+export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
   const { createEntry } = useContext(entryContext);
 
   const { push } = useRouter();
@@ -44,6 +50,7 @@ export default function EntryForm() {
     onSubmit: async (values) => {
       console.log(values);
       await createEntry(values);
+      setShowForm(!showForm);
     },
     enableReinitialize: true,
   });
@@ -52,7 +59,7 @@ export default function EntryForm() {
     formik.setFieldValue("automobile_type", type);
   };
 
-  // console.log("values", formik.values);
+  console.log("values", formik.values);
 
   const [colors, setColors] = useState<string>("");
 
@@ -75,7 +82,11 @@ export default function EntryForm() {
   };
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      className="absolute w-screen h-screen flex justify-center items-center"
+    >
       <div className="cardForm flex gap-y-10 flex-col   bg-[#242529] rounded-lg px-5  pt-16 pb-5 ">
         <div className="w-full text-left">
           <h2>Ingresar entrada</h2>
@@ -207,26 +218,20 @@ export default function EntryForm() {
               </div>
             </div>
             <div className=" flex justify-center items-center gap-x-2">
-              <button
-                onClick={() => {
-                  push("/entry");
-                }}
-                type="submit"
-                className="bg-blue-600 border-blue-600"
-              >
+              <button type="submit" className="bg-blue-600 border-blue-600">
                 Insertar vehiculo
               </button>
             </div>
           </div>
         </form>
         <div
-          onClick={() => push("/entry")}
+          onClick={() => setShowForm(!showForm)}
           className=" flex underline text-blue-600 cursor-pointer hover:text-blue-500"
         >
           <MdKeyboardBackspace />
           <h3 className="font-medium  text-xs">Volver a la tabla</h3>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
