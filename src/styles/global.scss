@@ -72,6 +72,11 @@ button {
     @apply text-xs font-medium p-2 bg-blue-500 rounded-lg bg-[#242529] border-[#36373d] border-2;
 }
 
-.labelRadio{
+.labelRadio {
     @apply text-xs
+}
+
+.boxType {
+    border-width: 1px;
+    @apply relative flex items-center justify-center gap-x-1 p-3 rounded-lg flex-col w-20 text-xs cursor-pointer;
 }
