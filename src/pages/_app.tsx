@@ -2,6 +2,7 @@
 import "@/styles/global.scss";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
+import { motion } from "framer-motion";
 import { EntryContextProvider } from "@/contexts/EntryContext";
 import { RatesContextProvider } from "@/contexts/RatesContext";
 import { AlertContextProvider } from "@/contexts/AlertContext";
