@@ -80,3 +80,17 @@ button {
     border-width: 1px;
     @apply relative flex items-center justify-center gap-x-1 p-3 rounded-lg flex-col w-20 text-xs cursor-pointer;
 }
+
+.alertBox {
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    border-width: 2px;
+    border-color: #292A2E;
+    @apply bg-red-500 p-10 bg-[#242529] ;
+}

@@ -11,6 +11,8 @@ import {
   MdAddCard,
 } from "react-icons/md";
 import { useRouter } from "next/router";
+import Alert from "../../components/alert/Alert";
+import { alertContext } from "@/contexts/AlertContext";
 
 interface MyProps {
   data: {
@@ -40,6 +42,7 @@ export default function index({ data }: MyProps) {
   const { push } = useRouter();
 
   const { entrys, setEntrys } = useContext(entryContext);
+  const { showAlert } = useContext(alertContext);
 
   useEffect(() => {
     if (Array.isArray(data)) {
@@ -52,8 +55,11 @@ export default function index({ data }: MyProps) {
   console.log(entrys);
 
   return (
-    <div className="w-screen h-screen flex justify-center items-start">
-      <div className="my-8 relative overflow-x-auto flex flex-col gap-y-3">
+    <div className="w-screen h-screen flex justify-start items-center flex-col relative z-10">
+      <div
+        style={showAlert ? { opacity: "0.2" } : {}}
+        className="my-8 relative overflow-x-auto flex flex-col gap-y-3 "
+      >
         <div>
           <button onClick={() => push("/entry/EntryForm")}>
             Insertar vehiculo
@@ -113,6 +119,7 @@ export default function index({ data }: MyProps) {
           </tbody>
         </table>
       </div>
+      {showAlert ? <Alert /> : ""}
     </div>
   );
 }

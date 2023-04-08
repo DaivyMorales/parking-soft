@@ -15,23 +15,23 @@ export const ratesContext = createContext<StateContext>({
 });
 
 export const RatesContextProvider = ({ children }: RatesContextProps) => {
-  const calculateAutomobileAmount = (hours: number, type: string): number => {
-    console.log("hours:", hours, "type:", type);
+  const calculateAutomobileAmount = (minutes: number, type: string): number => {
+    console.log("minutes:", minutes, "type:", type);
     switch (type) {
       case "Mula":
-        const resultTractor = hours * 666.6666666666667;
+        const resultTractor = minutes * 11.11111111111111;
         return Number(resultTractor.toFixed(0));
 
       case "Carro":
-        const resultCar = hours * 250;
+        const resultCar = minutes * 4.166666666666667;
         return Number(resultCar.toFixed(0));
 
       case "Moto":
-        const resultMotocicle = hours * 166.6666666666667;
+        const resultMotocicle = minutes * 2.777777777777778;
         return Number(resultMotocicle.toFixed(0));
 
       case "Camion":
-        const resultTruck = hours * 500;
+        const resultTruck = minutes * 8.333333333333333;
         return Number(resultTruck.toFixed(0));
 
       default:

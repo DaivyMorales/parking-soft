@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { ratesContext } from "@/contexts/RatesContext";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
+import { alertContext } from "@/contexts/AlertContext";
 
 interface Entry {
   _id: string;
@@ -24,11 +25,18 @@ type Exit = {
   amount: number;
 };
 export default function EntryCard({ entry }: EntryCardProps) {
-  const { updateStatusEntryAndAmount } = useContext(entryContext);
   const { calculateAutomobileAmount } = useContext(ratesContext);
+  const { showAlert, setShowAlert, setAlertInformation, alertInformation } =
+    useContext(alertContext);
 
   const [amountState, setAmountState] = useState<number>(1);
   const [timeDiff, setTimeDiff] = useState<number>(0);
+
+  const now = new Date();
+  now.setHours(now.getHours() - 5);
+  const isoDateTime = now.toISOString();
+
+  console.log("isoDateTime", isoDateTime);
 
   const dateCreated = new Date(entry.createdAt);
   const formattedTimeCreated = dateCreated.toISOString().substring(11, 16);
@@ -42,23 +50,36 @@ export default function EntryCard({ entry }: EntryCardProps) {
 
   const updatedTime: string = `${formattedTimeUpdated} - ${formattedDateUpdated}`;
 
-  useEffect(() => {
-    const diffInMs =
-      new Date(entry.updatedAt).getTime() - new Date(entry.createdAt).getTime();
-    setTimeDiff(Math.floor(diffInMs / (1000 * 60 * 60)));
-  }, [amountState]);
+  useEffect(() => {}, []);
 
   const amountCalculate = async () => {
+    const diff = Math.floor(
+      (new Date(isoDateTime).getTime() - new Date(entry.createdAt).getTime()) /
+        (1000 * 60)
+    );
+    console.log(diff);
+
     const amountCalculated = calculateAutomobileAmount(
-      timeDiff,
+      diff,
       entry.automobile_type
     );
+
     const amountStatus: Exit = {
       exit: true,
       amount: amountCalculated,
     };
     console.log(amountCalculated);
-    updateStatusEntryAndAmount(entry._id, amountStatus);
+
+    setAlertInformation({
+      _id: entry._id,
+      valero_num: entry.valero_num,
+      plate: entry.plate,
+      automobile_type: entry.automobile_type,
+      amount: amountCalculated,
+      exit: true,
+    });
+
+    
   };
 
   return (
@@ -91,8 +112,9 @@ export default function EntryCard({ entry }: EntryCardProps) {
         <a
           href="#"
           onClick={() => {
-            setAmountState(1);
+            // setAmountState(1);
             amountCalculate();
+            setShowAlert(!showAlert);
           }}
           className="font-medium text-red-600  hover:underline"
         >
