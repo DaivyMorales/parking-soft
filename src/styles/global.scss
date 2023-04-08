@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+// Definición de variables
+$bg-color: #292a2e;
+
 body {
     background-color: #202226;
     color: white
 }
+
+
 
 h1 {
     @apply text-7xl;
@@ -63,13 +68,14 @@ label {
     @apply text-sm font-medium;
 }
 
-input {
+input[type="text"] {
     border-width: 1px;
     @apply text-xs rounded-lg w-full bg-[#242529] p-2 border-[#474950] text-white font-light;
 }
 
 button {
-    @apply text-xs font-medium p-2 bg-blue-500 rounded-lg bg-[#242529] border-[#36373d] border-2;
+    border-width: 1px;
+    @apply text-xs flex justify-center items-center gap-x-1 font-medium py-1 px-2 bg-blue-500 rounded-md bg-[#242529] border-[#36373d] shadow-lg;
 }
 
 .labelRadio {
@@ -91,5 +97,31 @@ button {
     z-index: 9999;
     border-width: 2px;
     border-color: #292A2E;
-    @apply bg-red-500 p-10 bg-[#242529] ;
+    @apply bg-red-500 p-10 bg-[#242529];
+}
+
+.boxFilter {
+    border-width: 1px;
+    @apply flex w-28 justify-center shadow-lg items-center gap-x-2 text-xs rounded-md bg-[#292a2e] px-2 py-1 border-[#474950] text-white font-light 
+}
+
+.filterInput {
+    @apply bg-[#292a2e] w-16  text-white text-xs;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    // Estilos específicos para webkit
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    // Estilos específicos para Firefox
+    &::-moz-number-spin-box {
+        -moz-appearance: textfield;
+    }
 }

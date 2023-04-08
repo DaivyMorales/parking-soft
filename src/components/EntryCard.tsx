@@ -28,7 +28,7 @@ export default function EntryCard({ entry }: EntryCardProps) {
   const { calculateAutomobileAmount } = useContext(ratesContext);
   const { showAlert, setShowAlert, setAlertInformation, alertInformation } =
     useContext(alertContext);
-    
+
   const now = new Date();
   now.setHours(now.getHours() - 5);
   const isoDateTime = now.toISOString();
@@ -104,11 +104,17 @@ export default function EntryCard({ entry }: EntryCardProps) {
         <a
           href="#"
           onClick={() => {
-            // setAmountState(1);
-            amountCalculate();
-            setShowAlert(!showAlert);
+            if (entry.amount === undefined) {
+              amountCalculate();
+              setShowAlert(!showAlert);
+            }
           }}
-          className="font-medium text-red-600  hover:underline"
+          style={
+            entry.amount
+              ? { color: "gray", cursor: "no-drop" }
+              : { color: "red" }
+          }
+          className="font-medium  hover:underline"
         >
           Pagar
         </a>

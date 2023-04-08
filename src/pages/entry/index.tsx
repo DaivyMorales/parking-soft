@@ -1,7 +1,7 @@
 import EntryCard from "@/components/EntryCard";
 import { entryContext } from "@/contexts/EntryContext";
 import { GetServerSidePropsContext } from "next";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState, ChangeEvent } from "react";
 import {
   MdFindInPage,
   MdGrid3X3,
@@ -14,6 +14,9 @@ import { useRouter } from "next/router";
 import Alert from "../../components/alert/Alert";
 import { alertContext } from "@/contexts/AlertContext";
 import EntryForm from "@/components/EntryForm";
+
+import { BsSearch } from "react-icons/bs";
+import { TiPlus } from "react-icons/ti";
 
 interface MyProps {
   data: {
@@ -46,6 +49,7 @@ export default function index({ data }: MyProps) {
   const { showAlert } = useContext(alertContext);
 
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     if (Array.isArray(data)) {
@@ -55,6 +59,10 @@ export default function index({ data }: MyProps) {
     }
   }, []);
 
+  const handleOp = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
   console.log(entrys);
 
   return (
@@ -63,10 +71,19 @@ export default function index({ data }: MyProps) {
         style={showAlert || showForm ? { opacity: "0.2" } : {}}
         className="my-8 relative overflow-x-auto flex flex-col gap-y-3 "
       >
-        <div>
-          <button onClick={() => setShowForm(!showForm)}>
-            Insertar vehiculo
+        <div className="flex py-1 gap-x-1 ">
+          <button className="bg-blue-600 border-blue-800" onClick={() => setShowForm(!showForm)}>
+            <TiPlus/> Insertar vehiculo
           </button>
+          <div className="boxFilter">
+            <BsSearch size={12} className="" />
+            <input
+              type="text "
+              className="filterInput placeholder: text-gray-300"
+              placeholder="Buscar..."
+              onChange={handleOp}
+            />
+          </div>
         </div>
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs  text-gray-700  ">
@@ -116,9 +133,17 @@ export default function index({ data }: MyProps) {
             </tr>
           </thead>
           <tbody>
-            {entrys.map((entry: Entry) => (
-              <EntryCard key={entry._id} entry={entry} />
-            ))}
+            {entrys
+              .filter((entry) => {
+                if (searchTerm == "") {
+                  return entry;
+                } else if (entry.plate.includes(searchTerm) || entry.valero_num.includes(searchTerm)) {
+                  return entry;
+                }
+              })
+              .map((entry: Entry) => (
+                <EntryCard key={entry._id} entry={entry} />
+              ))}
           </tbody>
         </table>
       </div>

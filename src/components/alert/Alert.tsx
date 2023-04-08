@@ -38,7 +38,7 @@ export default function Alert() {
         </div>
         <div>
           <label htmlFor="" className="text-gray-500">
-            Monto
+            Monto a Cobrar
           </label>
           <h3 className="text-2xl underline ">${alertInformation.amount}</h3>
         </div>

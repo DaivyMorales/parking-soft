@@ -85,7 +85,7 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="absolute w-screen h-screen flex justify-center items-center"
+      className="absolute -top-5 w-screen h-screen flex justify-center items-center"
     >
       <div className="cardForm flex gap-y-10 flex-col   bg-[#242529] rounded-lg px-5  pt-16 pb-5 ">
         <div className="w-full text-left">
