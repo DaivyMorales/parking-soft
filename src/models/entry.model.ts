@@ -25,6 +25,11 @@ const entrySchema = new Schema(
       type: Boolean,
       default: false,
     },
+    type: {
+      type: String,
+      require: "The type is require",
+      trim: true,
+    },
   },
   {
     timestamps: {
