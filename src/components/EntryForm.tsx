@@ -6,7 +6,7 @@ import {
   useFormik,
   useFormikContext,
 } from "formik";
-import { useState, useContext, ChangeEvent } from "react";
+import { useState, useContext, ChangeEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import { entryContext } from "@/contexts/EntryContext";
 import { MdKeyboardBackspace, MdCircle } from "react-icons/md";
@@ -58,10 +58,6 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
     enableReinitialize: true,
   });
 
-  const handleAutomobileTypeChange = (type: string) => {
-    formik.setFieldValue("automobile_type", type);
-  };
-
   const handleAlbatecChange = (type: string) => {
     formik.setFieldValue("type", type);
   };
@@ -72,6 +68,10 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
   const [albatec, setAlbatec] = useState<string>("Normal");
 
   const [type, setType] = useState<string>("");
+
+  const handleAutomobileTypeChange = (type: string) => {
+    formik.setFieldValue("automobile_type", type);
+  };
 
   const styleTypeValidateOn: StyleBoxType = {
     color: "#2563eb",
@@ -88,6 +88,16 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
   const styleCheckType = {
     visibility: "hidden",
   };
+
+  useEffect(() => {
+    if (albatec === "Albatec") {
+      formik.setFieldValue("automobile_type", "Mula");
+      setColors("Mula");
+    } else {
+      setColors("");
+      formik.setFieldValue("automobile_type", "");
+    }
+  }, [albatec]);
 
   return (
     <motion.div
@@ -117,8 +127,14 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
                   handleAlbatecChange("Normal");
                 }}
               >
-                {albatec === "Normal" ? <IoIosCheckmarkCircle size={18} /> : <MdCircle size={18} />}
-                <label htmlFor="normal" className="cursor-pointer">Normal</label>
+                {albatec === "Normal" ? (
+                  <IoIosCheckmarkCircle size={18} />
+                ) : (
+                  <MdCircle size={18} />
+                )}
+                <label htmlFor="normal" className="cursor-pointer">
+                  Normal
+                </label>
               </div>
               <div
                 className="boxAlbatec "
@@ -137,7 +153,9 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
                 ) : (
                   <MdCircle size={18} />
                 )}
-                <label htmlFor="normal"  className="cursor-pointer">Albatec</label>
+                <label htmlFor="normal" className="cursor-pointer">
+                  Albatec
+                </label>
               </div>
             </div>
             <div className="flex flex-col gap-y-1">

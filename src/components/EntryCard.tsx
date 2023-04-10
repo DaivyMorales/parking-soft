@@ -58,7 +58,8 @@ export default function EntryCard({ entry }: EntryCardProps) {
 
     const amountCalculated = calculateAutomobileAmount(
       diff,
-      entry.automobile_type
+      entry.automobile_type,
+      entry.type
     );
 
     const amountStatus: Exit = {
