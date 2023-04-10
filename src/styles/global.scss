@@ -73,6 +73,14 @@ input[type="text"] {
     @apply text-xs rounded-lg w-full bg-[#242529] p-2 border-[#474950] text-white font-light;
 }
 
+input[type="date"] {
+    @apply text-xs w-full bg-[#292a2e] text-white font-light;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
 button {
     border-width: 1px;
     @apply text-xs flex justify-center items-center gap-x-1 font-medium py-1 px-2 bg-blue-500 rounded-md bg-[#242529] border-[#36373d] shadow-lg;
