@@ -47,8 +47,7 @@ interface Entry {
 export default function index({ data }: MyProps) {
   const { push } = useRouter();
 
-  const { entrys, setEntrys, filterAutomobile, filterStatus } =
-    useContext(entryContext);
+  const { entrys, filterAllCategories } = useContext(entryContext);
   const { showAlert } = useContext(alertContext);
 
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -58,49 +57,21 @@ export default function index({ data }: MyProps) {
     setSearchTerm(event.target.value);
   };
 
-  const [selectedType, setSelectedType] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<string>("n");
 
   function handleTypeChange(event: ChangeEvent<HTMLSelectElement>) {
     setSelectedType(event.target.value);
   }
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [selectedStatus, setSelectedStatus] = useState<string>("n");
+  console.log(selectedStatus, selectedType);
 
   function handleStatusChange(event: ChangeEvent<HTMLSelectElement>) {
     setSelectedStatus(event.target.value);
   }
 
-  // useEffect(() => {
-  //   if(){
-      
-  //     if (selectedType !== "" && selectedType !== "Tipo") {
-  //       filterAutomobile(selectedType);
-  //     } else if (selectedType === "Tipo" || selectedType === "") {
-  //       if (Array.isArray(data)) {
-  //         setEntrys(data);
-  //       } else {
-  //         setEntrys(Array.from([data]));
-  //       }
-  //     }
-  //   }else{  
-  //     if (selectedStatus !== "" && selectedStatus !== "Estado") {
-  //       filterStatus(selectedStatus);
-  //     } else if (selectedStatus === "Estado" || selectedStatus === "") {
-  //       if (Array.isArray(data)) {
-  //         setEntrys(data);
-  //       } else {
-  //         setEntrys(Array.from([data]));
-  //       }
-  //     }
-  //   }
-  // }, [selectedType, selectedStatus]);
-
-  // useEffect(() => {
-  //   if (selectedType !== "" && selectedType !== "Todos") {
-  //     filterAutomobile(selectedType);
-  //   } else if (selectedType === "Todos") {
-  //     getEntrys();
-  //   }
-  // }, []);
+  useEffect(() => {
+    filterAllCategories(selectedType, selectedStatus, "n", "n");
+  }, [selectedType, selectedStatus]);
 
   return (
     <div className="w-screen h-screen flex justify-start items-center flex-col relative z-10">
@@ -135,7 +106,7 @@ export default function index({ data }: MyProps) {
                 className="filterSelect"
                 onChange={handleTypeChange}
               >
-                <option>Tipo</option>
+                <option value="n">Tipo</option>
                 <option value="Carro">Carro</option>
                 <option value="Moto">Moto</option>
                 <option value="Camion">Camion</option>
@@ -151,7 +122,7 @@ export default function index({ data }: MyProps) {
                 className="filterSelect"
                 onChange={handleStatusChange}
               >
-                <option>Estado</option>
+                <option value="n">Estado</option>
                 <option value="true">Completado</option>
                 <option value="false">En Parqueadero</option>
               </select>
