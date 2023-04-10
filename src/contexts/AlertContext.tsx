@@ -11,6 +11,7 @@ interface IAlertInformation {
   automobile_type: string;
   amount?: number;
   exit: boolean;
+  type: string;
 }
 
 interface StateContext {
@@ -30,6 +31,7 @@ export const alertContext = createContext<StateContext>({
     automobile_type: "",
     amount: 0,
     exit: true,
+    type: "",
   },
   setAlertInformation: () => {},
 });
@@ -45,6 +47,7 @@ export const AlertContextProvider = ({
     automobile_type: "",
     amount: 0,
     exit: true,
+    type: "",
   });
   const contextValue = {
     showAlert,

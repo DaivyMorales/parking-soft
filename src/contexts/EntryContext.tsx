@@ -13,6 +13,7 @@ interface Request {
   amount?: number;
   exit: boolean;
   _id: string;
+  type: string,
   createdAt: string;
   updatedAt: string;
 }

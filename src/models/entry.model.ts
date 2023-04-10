@@ -28,6 +28,7 @@ const entrySchema = new Schema(
     type: {
       type: String,
       require: "The type is require",
+      default: "Normal",
       trim: true,
     },
   },

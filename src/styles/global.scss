@@ -110,7 +110,7 @@ button {
     z-index: 9999;
     border-width: 2px;
     border-color: #292A2E;
-    @apply bg-red-500 p-10 bg-[#242529];
+    @apply bg-red-500 p-10 bg-[#242529] flex flex-col justify-start items-start;
 }
 
 .boxFilter {

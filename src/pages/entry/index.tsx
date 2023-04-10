@@ -16,6 +16,7 @@ import EntryForm from "@/components/EntryForm";
 
 import { BsSearch } from "react-icons/bs";
 import { TiPlus } from "react-icons/ti";
+import { TbCirclesFilled } from "react-icons/tb";
 import { HiFilter, HiRefresh } from "react-icons/hi";
 
 interface MyProps {
@@ -38,6 +39,7 @@ interface Entry {
   automobile_type: string;
   amount?: number;
   exit: boolean;
+  type: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -180,6 +182,12 @@ export default function index({ data }: MyProps) {
         <table className="w-full text-sm text-left text-gray-500 ">
           <thead className="text-xs  text-gray-700  ">
             <tr className="trBorder  border-gray-700 ">
+              <th scope="col" className="py-2">
+                <div className="flex gap-x-1 justify-start items-center">
+                  <TbCirclesFilled className="iconTable" size={15} />
+                  <h3></h3>
+                </div>
+              </th>
               <th scope="col" className="py-2 ">
                 <div className="flex gap-x-1 justify-start items-center">
                   <MdFindInPage className="iconTable" size={15} />

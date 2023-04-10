@@ -69,7 +69,7 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
   console.log("values", formik.values);
 
   const [colors, setColors] = useState<string>("");
-  const [albatec, setAlbatec] = useState<string>("");
+  const [albatec, setAlbatec] = useState<string>("Normal");
 
   const [type, setType] = useState<string>("");
 

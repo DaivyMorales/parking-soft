@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import moment from "moment-timezone";
 import { ratesContext } from "@/contexts/RatesContext";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
+import { HiExclamationCircle, HiMinusCircle } from "react-icons/hi2";
 import { alertContext } from "@/contexts/AlertContext";
 
 interface Entry {
@@ -12,6 +13,7 @@ interface Entry {
   automobile_type: string;
   amount?: number;
   exit: boolean;
+  type: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -71,11 +73,22 @@ export default function EntryCard({ entry }: EntryCardProps) {
       automobile_type: entry.automobile_type,
       amount: amountCalculated,
       exit: true,
+      type: entry.type,
     });
   };
 
   return (
     <tr className="border-b border-gray-700 text-left">
+      <th>
+        {entry.type === "Normal" ? (
+          ""
+        ) : (
+          <div className="flex justify-center items-center bg-red-900 rounded-md text-red-400 pr-1">
+            <HiExclamationCircle />
+            <p className="text-red-400">Albatec</p>
+          </div>
+        )}
+      </th>
       <th scope="row" className=" font-bold text-gray-400 whitespace-nowrap ">
         {entry.valero_num}
       </th>

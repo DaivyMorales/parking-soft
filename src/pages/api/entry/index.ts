@@ -26,14 +26,15 @@ export default async function indexEntry(
 
     case "POST":
       try {
-        const { valero_num, plate, automobile_type, amount, exit } = body;
+        const { valero_num, plate, automobile_type, amount, exit, type } = body;
 
         const newEntry = new Entry({
           valero_num,
           plate,
           automobile_type,
           amount,
-          exit
+          exit,
+          type,
         });
 
         const entrySaved = await newEntry.save();
