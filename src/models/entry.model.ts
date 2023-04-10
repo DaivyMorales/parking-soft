@@ -23,6 +23,7 @@ const entrySchema = new Schema(
     },
     exit: {
       type: Boolean,
+      default: false,
     },
   },
   {

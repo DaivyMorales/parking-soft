@@ -47,7 +47,7 @@ interface Entry {
 export default function index({ data }: MyProps) {
   const { push } = useRouter();
 
-  const { entrys, setEntrys, filterAutomobile, getEntrys } =
+  const { entrys, setEntrys, filterAutomobile, filterStatus } =
     useContext(entryContext);
   const { showAlert } = useContext(alertContext);
 
@@ -63,18 +63,36 @@ export default function index({ data }: MyProps) {
   function handleTypeChange(event: ChangeEvent<HTMLSelectElement>) {
     setSelectedType(event.target.value);
   }
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
 
-  useEffect(() => {
-    if (selectedType !== "" && selectedType !== "Tipo") {
-      filterAutomobile(selectedType);
-    } else if (selectedType === "Tipo" || selectedType === "") {
-      if (Array.isArray(data)) {
-        setEntrys(data);
-      } else {
-        setEntrys(Array.from([data]));
-      }
-    }
-  }, [selectedType]);
+  function handleStatusChange(event: ChangeEvent<HTMLSelectElement>) {
+    setSelectedStatus(event.target.value);
+  }
+
+  // useEffect(() => {
+  //   if(){
+      
+  //     if (selectedType !== "" && selectedType !== "Tipo") {
+  //       filterAutomobile(selectedType);
+  //     } else if (selectedType === "Tipo" || selectedType === "") {
+  //       if (Array.isArray(data)) {
+  //         setEntrys(data);
+  //       } else {
+  //         setEntrys(Array.from([data]));
+  //       }
+  //     }
+  //   }else{  
+  //     if (selectedStatus !== "" && selectedStatus !== "Estado") {
+  //       filterStatus(selectedStatus);
+  //     } else if (selectedStatus === "Estado" || selectedStatus === "") {
+  //       if (Array.isArray(data)) {
+  //         setEntrys(data);
+  //       } else {
+  //         setEntrys(Array.from([data]));
+  //       }
+  //     }
+  //   }
+  // }, [selectedType, selectedStatus]);
 
   // useEffect(() => {
   //   if (selectedType !== "" && selectedType !== "Todos") {
@@ -108,7 +126,7 @@ export default function index({ data }: MyProps) {
               />
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="flex gap-x-2 justify-end">
             <div className="boxFilter ">
               <HiFilter />
 
@@ -122,6 +140,20 @@ export default function index({ data }: MyProps) {
                 <option value="Moto">Moto</option>
                 <option value="Camion">Camion</option>
                 <option value="Mula">Mula</option>
+              </select>
+            </div>
+
+            <div className="boxFilter ">
+              <MdFilterTiltShift size={15} />
+
+              <select
+                id="automobile_type"
+                className="filterSelect"
+                onChange={handleStatusChange}
+              >
+                <option>Estado</option>
+                <option value="true">Completado</option>
+                <option value="false">En Parqueadero</option>
               </select>
             </div>
           </div>

@@ -25,6 +25,7 @@ interface StateContext {
   createEntry: (body: object) => Promise<void>;
   filterAutomobile: (type: string) => Promise<void>;
   getEntrys: () => Promise<void>;
+  filterStatus: (status: string) => Promise<void>;
 }
 
 export const entryContext = createContext<StateContext>({
@@ -34,6 +35,7 @@ export const entryContext = createContext<StateContext>({
   updateStatusEntryAndAmount: async () => {},
   createEntry: async () => {},
   filterAutomobile: async () => {},
+  filterStatus: async () => {},
   getEntrys: async () => {},
 });
 
@@ -89,7 +91,13 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
       `http://localhost:3000/api/entry/type/${type}`
     );
     setEntrys(response.data);
-    console.log(response.data);
+  };
+
+  const filterStatus = async (status: string) => {
+    const response = await axios.get(
+      `http://localhost:3000/api/entry/status/${status}`
+    );
+    setEntrys(response.data);
   };
 
   const createEntry = async (body: object) => {
@@ -123,6 +131,7 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
         createEntry,
         filterAutomobile,
         getEntrys,
+        filterStatus,
       }}
     >
       {children}
