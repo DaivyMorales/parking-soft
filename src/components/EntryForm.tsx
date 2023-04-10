@@ -9,10 +9,11 @@ import {
 import { useState, useContext, ChangeEvent } from "react";
 import { useRouter } from "next/router";
 import { entryContext } from "@/contexts/EntryContext";
-import { MdKeyboardBackspace } from "react-icons/md";
+import { MdKeyboardBackspace, MdCircle } from "react-icons/md";
 import { FaTruck, FaMotorcycle, FaTrailer } from "react-icons/fa";
 import { BsCarFrontFill } from "react-icons/bs";
 import { HiCheckCircle } from "react-icons/hi";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import { motion } from "framer-motion";
 
 interface IInitialValues {
@@ -20,6 +21,7 @@ interface IInitialValues {
   plate: string;
   automobile_type: string;
   exit: boolean;
+  type: string;
 }
 
 interface EntryFormProps {
@@ -43,6 +45,7 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
     plate: "",
     automobile_type: "",
     exit: false,
+    type: "",
   });
 
   const formik = useFormik({
@@ -59,9 +62,14 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
     formik.setFieldValue("automobile_type", type);
   };
 
+  const handleAlbatecChange = (type: string) => {
+    formik.setFieldValue("type", type);
+  };
+
   console.log("values", formik.values);
 
   const [colors, setColors] = useState<string>("");
+  const [albatec, setAlbatec] = useState<string>("");
 
   const [type, setType] = useState<string>("");
 
@@ -95,6 +103,43 @@ export default function EntryForm({ setShowForm, showForm }: EntryFormProps) {
 
         <form onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-1  w-full">
+            <label htmlFor="">Es?</label>
+            <div className="grid grid-cols-2 gap-x-2">
+              <div
+                className="boxAlbatec "
+                style={
+                  albatec === "Normal"
+                    ? styleTypeValidateOn
+                    : styleTypeValidateOff
+                }
+                onClick={() => {
+                  setAlbatec("Normal");
+                  handleAlbatecChange("Normal");
+                }}
+              >
+                {albatec === "Normal" ? <IoIosCheckmarkCircle size={18} /> : <MdCircle size={18} />}
+                <label htmlFor="normal" className="cursor-pointer">Normal</label>
+              </div>
+              <div
+                className="boxAlbatec "
+                style={
+                  albatec === "Albatec"
+                    ? styleTypeValidateOn
+                    : styleTypeValidateOff
+                }
+                onClick={() => {
+                  setAlbatec("Albatec");
+                  handleAlbatecChange("Albatec");
+                }}
+              >
+                {albatec === "Albatec" ? (
+                  <IoIosCheckmarkCircle size={18} />
+                ) : (
+                  <MdCircle size={18} />
+                )}
+                <label htmlFor="normal"  className="cursor-pointer">Albatec</label>
+              </div>
+            </div>
             <div className="flex flex-col gap-y-1">
               <label htmlFor="valero_num">Numero de Valero</label>
               <input

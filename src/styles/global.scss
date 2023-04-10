@@ -95,6 +95,11 @@ button {
     @apply relative flex items-center justify-center gap-x-1 p-3 rounded-lg flex-col w-20 text-xs cursor-pointer;
 }
 
+.boxAlbatec {
+    border-width: 1px;
+    @apply py-3  rounded-xl flex justify-start px-5 items-center gap-x-2 text-xs cursor-pointer;
+}
+
 .alertBox {
     border-radius: 5px;
     margin-bottom: 20px;
