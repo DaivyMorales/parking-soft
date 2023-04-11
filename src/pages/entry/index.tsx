@@ -261,7 +261,7 @@ export default function index({ data }: MyProps) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const res = await fetch("http://localhost:3000/api/entry");
+  const res = await fetch("https://parking-soft.vercel.app/api/entry");
   const data = await res.json();
 
   return {
