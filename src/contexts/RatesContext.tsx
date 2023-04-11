@@ -40,7 +40,7 @@ export const RatesContextProvider = ({ children }: RatesContextProps) => {
         const resultMotocicle = minutes * 2.777777777777778;
         return Number(resultMotocicle.toFixed(0));
 
-      case "MulaNormal":
+      case "CamionNormal":
         const resultTruck = minutes * 8.333333333333333;
         return Number(resultTruck.toFixed(0));
 
