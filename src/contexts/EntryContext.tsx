@@ -13,7 +13,7 @@ interface Request {
   amount?: number;
   exit: boolean;
   _id: string;
-  type: string,
+  type: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -44,7 +44,7 @@ export const entryContext = createContext<StateContext>({
   filterAutomobile: async () => {},
   filterStatus: async () => {},
   getEntrys: async () => {},
-  filterAllCategories: async() => {},
+  filterAllCategories: async () => {},
 });
 
 export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
@@ -55,7 +55,7 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
   const updateEntry = async (id: string, body: object) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/entry/${id}`,
+        `https://parking-soft.vercel.app/api/entry/${id}`,
         body
       );
 
@@ -76,7 +76,7 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
   const updateStatusEntryAndAmount = async (id: string, body: object) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/entry/${id}`,
+        `https://parking-soft.vercel.app/api/entry/${id}`,
         body
       );
 
@@ -96,14 +96,14 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
 
   const filterAutomobile = async (type: string) => {
     const response = await axios.get(
-      `http://localhost:3000/api/entry/type/${type}`
+      `https://parking-soft.vercel.app/api/entry/type/${type}`
     );
     setEntrys(response.data);
   };
 
   const filterStatus = async (status: string) => {
     const response = await axios.get(
-      `http://localhost:3000/api/entry/status/${status}`
+      `https://parking-soft.vercel.app/api/entry/status/${status}`
     );
     setEntrys(response.data);
   };
@@ -111,7 +111,7 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
   const createEntry = async (body: object) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/entry",
+        "https://parking-soft.vercel.app/api/entry",
         body
       );
       setEntrys([...entrys, response.data]);
@@ -122,7 +122,9 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
 
   const getEntrys = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/entry");
+      const response = await axios.get(
+        "https://parking-soft.vercel.app/api/entry"
+      );
       setEntrys(response.data);
     } catch (error) {
       console.log(error);
@@ -137,7 +139,7 @@ export const EntryContextProvider: React.FC<EntryContextProviderProps> = ({
   ) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/entry/filter/${type}/${status}/${start}/${end}/`
+        `https://parking-soft.vercel.app/api/entry/filter/${type}/${status}/${start}/${end}/`
       );
       setEntrys(response.data);
     } catch (error) {
